@@ -15,85 +15,27 @@ import {
   Calendar,
   Mail
 } from "lucide-react";
+import { useProducts } from "@/hooks/useProducts";
+import { useOrders } from "@/hooks/useOrders";
+import { useStats } from "@/hooks/useStats";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
-
-  // Mock data
-  const stats = {
-    totalRevenue: 12450.50,
-    totalOrders: 89,
-    totalProducts: 15,
-    totalCustomers: 234
-  };
-
-  const recentOrders = [
-    {
-      id: "CMD-001",
-      customer: "Marie Dubois",
-      email: "marie@email.com",
-      total: 49.98,
-      status: "completed",
-      date: "2024-01-15",
-      products: ["Gloss Mystique Rose", "Baume Sérénité"]
-    },
-    {
-      id: "CMD-002", 
-      customer: "Sophie Martin",
-      email: "sophie@email.com",
-      total: 24.99,
-      status: "processing",
-      date: "2024-01-15",
-      products: ["Gloss Lumière Dorée"]
-    },
-    {
-      id: "CMD-003",
-      customer: "Amélie Petit",
-      email: "amelie@email.com", 
-      total: 76.97,
-      status: "shipped",
-      date: "2024-01-14",
-      products: ["Rouge Chakra Bordeaux", "Gloss Essence Corail", "Baume Sérénité"]
-    }
-  ];
-
-  const products = [
-    {
-      id: 1,
-      name: "Gloss Mystique Rose",
-      stock: 15,
-      price: 24.99,
-      sales: 45,
-      status: "active"
-    },
-    {
-      id: 2,
-      name: "Gloss Lumière Dorée", 
-      stock: 8,
-      price: 26.99,
-      sales: 32,
-      status: "active"
-    },
-    {
-      id: 3,
-      name: "Rouge à Lèvres Passion",
-      stock: 0,
-      price: 28.99,
-      sales: 28,
-      status: "out_of_stock"
-    }
-  ];
+  const { data: products = [] } = useProducts();
+  const { data: orders = [] } = useOrders();
+  const { data: stats } = useStats();
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
       completed: { label: "Livré", variant: "default" as const, className: "bg-green-100 text-green-800" },
       processing: { label: "En cours", variant: "secondary" as const, className: "bg-yellow-100 text-yellow-800" },
       shipped: { label: "Expédié", variant: "outline" as const, className: "bg-blue-100 text-blue-800" },
+      pending: { label: "En attente", variant: "secondary" as const, className: "bg-gray-100 text-gray-800" },
       active: { label: "Actif", variant: "default" as const, className: "bg-green-100 text-green-800" },
       out_of_stock: { label: "Rupture", variant: "destructive" as const, className: "bg-red-100 text-red-800" }
     };
     
-    const config = statusConfig[status as keyof typeof statusConfig];
+    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
     return (
       <Badge variant={config.variant} className={config.className}>
         {config.label}
@@ -147,8 +89,8 @@ const AdminDashboard = () => {
                   <Euro className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats.totalRevenue.toFixed(2)}€</div>
-                  <p className="text-xs text-muted-foreground">+12% ce mois</p>
+                  <div className="text-2xl font-bold">{stats?.totalRevenue.toFixed(2) || '0.00'}€</div>
+                  <p className="text-xs text-muted-foreground">Total des ventes</p>
                 </CardContent>
               </Card>
 
@@ -158,8 +100,8 @@ const AdminDashboard = () => {
                   <Package className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats.totalOrders}</div>
-                  <p className="text-xs text-muted-foreground">+8% ce mois</p>
+                  <div className="text-2xl font-bold">{stats?.totalOrders || 0}</div>
+                  <p className="text-xs text-muted-foreground">Total des commandes</p>
                 </CardContent>
               </Card>
 
@@ -169,8 +111,8 @@ const AdminDashboard = () => {
                   <Star className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats.totalProducts}</div>
-                  <p className="text-xs text-muted-foreground">3 en rupture</p>
+                  <div className="text-2xl font-bold">{stats?.totalProducts || 0}</div>
+                  <p className="text-xs text-muted-foreground">Produits actifs</p>
                 </CardContent>
               </Card>
 
@@ -180,8 +122,8 @@ const AdminDashboard = () => {
                   <Users className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats.totalCustomers}</div>
-                  <p className="text-xs text-muted-foreground">+15% ce mois</p>
+                  <div className="text-2xl font-bold">{stats?.totalCustomers || 0}</div>
+                  <p className="text-xs text-muted-foreground">Clients enregistrés</p>
                 </CardContent>
               </Card>
             </div>
@@ -193,24 +135,24 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {recentOrders.slice(0, 3).map((order) => (
+                  {orders.slice(0, 3).map((order) => (
                     <div key={order.id} className="flex items-center justify-between p-4 border rounded-lg">
                       <div className="flex-1">
                         <div className="flex items-center space-x-4">
                           <div>
-                            <p className="font-semibold">{order.customer}</p>
-                            <p className="text-sm text-gray-600">{order.email}</p>
+                            <p className="font-semibold">{order.customer?.first_name} {order.customer?.last_name}</p>
+                            <p className="text-sm text-gray-600">{order.customer?.email}</p>
                           </div>
                           <div>
-                            <p className="text-sm font-medium">Commande #{order.id}</p>
-                            <p className="text-sm text-gray-600">{order.date}</p>
+                            <p className="text-sm font-medium">Commande #{order.order_number}</p>
+                            <p className="text-sm text-gray-600">{new Date(order.created_at).toLocaleDateString()}</p>
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center space-x-4">
                         <div className="text-right">
-                          <p className="font-semibold">{order.total}€</p>
-                          <p className="text-sm text-gray-600">{order.products.length} produit(s)</p>
+                          <p className="font-semibold">{Number(order.total_amount).toFixed(2)}€</p>
+                          <p className="text-sm text-gray-600">{order.order_items?.length || 0} produit(s)</p>
                         </div>
                         {getStatusBadge(order.status)}
                       </div>
@@ -254,25 +196,25 @@ const AdminDashboard = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {recentOrders.map((order) => (
+                    {orders.map((order) => (
                       <TableRow key={order.id}>
-                        <TableCell className="font-medium">{order.id}</TableCell>
+                        <TableCell className="font-medium">{order.order_number}</TableCell>
                         <TableCell>
                           <div>
-                            <p className="font-medium">{order.customer}</p>
-                            <p className="text-sm text-gray-600">{order.email}</p>
+                            <p className="font-medium">{order.customer?.first_name} {order.customer?.last_name}</p>
+                            <p className="text-sm text-gray-600">{order.customer?.email}</p>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="text-sm">
-                            {order.products.map((product, index) => (
-                              <div key={index} className="truncate max-w-32">{product}</div>
+                            {order.order_items?.map((item, index) => (
+                              <div key={index} className="truncate max-w-32">{item.product?.name}</div>
                             ))}
                           </div>
                         </TableCell>
-                        <TableCell className="font-semibold">{order.total}€</TableCell>
+                        <TableCell className="font-semibold">{Number(order.total_amount).toFixed(2)}€</TableCell>
                         <TableCell>{getStatusBadge(order.status)}</TableCell>
-                        <TableCell>{order.date}</TableCell>
+                        <TableCell>{new Date(order.created_at).toLocaleDateString()}</TableCell>
                         <TableCell>
                           <Button size="sm" variant="outline">Voir détails</Button>
                         </TableCell>
@@ -303,7 +245,7 @@ const AdminDashboard = () => {
                       <TableHead>Produit</TableHead>
                       <TableHead>Stock</TableHead>
                       <TableHead>Prix</TableHead>
-                      <TableHead>Ventes</TableHead>
+                      <TableHead>Chakra</TableHead>
                       <TableHead>Statut</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
@@ -317,9 +259,9 @@ const AdminDashboard = () => {
                             {product.stock}
                           </span>
                         </TableCell>
-                        <TableCell className="font-semibold">{product.price}€</TableCell>
-                        <TableCell>{product.sales} ventes</TableCell>
-                        <TableCell>{getStatusBadge(product.status)}</TableCell>
+                        <TableCell className="font-semibold">{Number(product.price).toFixed(2)}€</TableCell>
+                        <TableCell>{product.chakra}</TableCell>
+                        <TableCell>{getStatusBadge(product.active ? 'active' : 'out_of_stock')}</TableCell>
                         <TableCell>
                           <div className="flex space-x-2">
                             <Button size="sm" variant="outline">Modifier</Button>
@@ -352,28 +294,28 @@ const AdminDashboard = () => {
                   <CardTitle>Clients totaux</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-pink-600">234</div>
-                  <p className="text-sm text-gray-600">+15% ce mois</p>
+                  <div className="text-3xl font-bold text-pink-600">{stats?.totalCustomers || 0}</div>
+                  <p className="text-sm text-gray-600">Clients enregistrés</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Clients actifs</CardTitle>
+                  <CardTitle>Commandes</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-green-600">89</div>
-                  <p className="text-sm text-gray-600">Commande récente</p>
+                  <div className="text-3xl font-bold text-green-600">{stats?.totalOrders || 0}</div>
+                  <p className="text-sm text-gray-600">Commandes passées</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Newsletter</CardTitle>
+                  <CardTitle>Chiffre d'affaires</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-purple-600">156</div>
-                  <p className="text-sm text-gray-600">Abonnés actifs</p>
+                  <div className="text-3xl font-bold text-purple-600">{stats?.totalRevenue.toFixed(2) || '0.00'}€</div>
+                  <p className="text-sm text-gray-600">Total des ventes</p>
                 </CardContent>
               </Card>
             </div>

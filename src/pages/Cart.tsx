@@ -175,8 +175,10 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 mb-4">
-                  Procéder au paiement
+                <Button asChild className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 mb-4">
+                  <Link to="/checkout">
+                    Procéder au paiement
+                  </Link>
                 </Button>
                 
                 <div className="text-center text-sm text-gray-500">
