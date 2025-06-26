@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Heart, Search, Menu, X } from "lucide-react";
+import { Heart, Search, Menu, ShoppingCart } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,19 +57,15 @@ const Navigation = () => {
             <Button variant="ghost" size="sm">
               <Heart className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="relative">
-              🛒
-              {cartCount > 0 && (
-                <Badge className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 bg-pink-500 text-xs">
-                  {cartCount}
-                </Badge>
-              )}
-            </Button>
-            <Button 
-              asChild
-              className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
-            >
-              <Link to="/admin">Admin</Link>
+            <Button variant="ghost" size="sm" className="relative" asChild>
+              <Link to="/cart">
+                <ShoppingCart className="w-4 h-4" />
+                {cartCount > 0 && (
+                  <Badge className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 bg-pink-500 text-xs">
+                    {cartCount}
+                  </Badge>
+                )}
+              </Link>
             </Button>
           </div>
 
@@ -108,20 +104,15 @@ const Navigation = () => {
                     <Heart className="w-4 h-4 mr-2" />
                     Favoris
                   </Button>
-                  <Button variant="outline" className="w-full justify-start relative">
-                    🛒 Panier
-                    {cartCount > 0 && (
-                      <Badge className="ml-auto bg-pink-500">
-                        {cartCount}
-                      </Badge>
-                    )}
-                  </Button>
-                  <Button 
-                    asChild
-                    className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
-                  >
-                    <Link to="/admin" onClick={() => setIsOpen(false)}>
-                      Dashboard Admin
+                  <Button variant="outline" className="w-full justify-start relative" asChild>
+                    <Link to="/cart" onClick={() => setIsOpen(false)}>
+                      <ShoppingCart className="w-4 h-4 mr-2" />
+                      Panier
+                      {cartCount > 0 && (
+                        <Badge className="ml-auto bg-pink-500">
+                          {cartCount}
+                        </Badge>
+                      )}
                     </Link>
                   </Button>
                 </div>

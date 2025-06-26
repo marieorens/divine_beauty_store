@@ -66,24 +66,24 @@ const Footer = () => {
             <h3 className="text-lg font-semibold">Service Client</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/faq" className="text-gray-400 hover:text-white transition-colors text-sm">
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/shipping" className="text-gray-400 hover:text-white transition-colors text-sm">
                   Livraison & Retours
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/size-guide" className="text-gray-400 hover:text-white transition-colors text-sm">
                   Guide des tailles
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/order-tracking" className="text-gray-400 hover:text-white transition-colors text-sm">
                   Suivi de commande
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
