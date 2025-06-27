@@ -6,32 +6,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/useCart";
 import { ArrowLeft, CreditCard, Lock } from "lucide-react";
 
 const Checkout = () => {
   const { toast } = useToast();
+  const { state: cartState } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
-  
-  // Mock cart data - in real app, this would come from cart context
-  const cartItems = [
-    {
-      id: 1,
-      name: "Gloss Mystique Rose",
-      price: 24.99,
-      quantity: 1,
-      image: "/placeholder.svg"
-    },
-    {
-      id: 2,
-      name: "Rouge Chakra Bordeaux",
-      price: 28.99,
-      quantity: 2,
-      image: "/placeholder.svg"
-    }
-  ];
+  const [paymentMethod, setPaymentMethod] = useState("card");
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cartState.total;
   const shipping = subtotal > 50 ? 0 : 4.99;
   const total = subtotal + shipping;
 
@@ -64,7 +50,7 @@ const Checkout = () => {
       
       toast({
         title: "Commande confirmée !",
-        description: "Votre paiement a été traité avec succès.",
+        description: `Votre paiement par ${paymentMethod === 'card' ? 'carte bancaire' : paymentMethod === 'paypal' ? 'PayPal' : 'virement bancaire'} a été traité avec succès.`,
       });
       
       // Redirect to success page
@@ -79,6 +65,24 @@ const Checkout = () => {
       setIsProcessing(false);
     }
   };
+
+  if (cartState.items.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">Votre panier est vide</h1>
+            <p className="text-gray-600 mb-8">Ajoutez des produits à votre panier avant de procéder au paiement.</p>
+            <Button asChild className="bg-gradient-to-r from-pink-500 to-purple-500">
+              <Link to="/products">
+                Découvrir nos produits
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
@@ -200,6 +204,40 @@ const Checkout = () => {
                     />
                   </div>
 
+                  {/* Payment Method Selection */}
+                  <div className="space-y-4">
+                    <Label>Moyen de paiement</Label>
+                    <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg">
+                        <RadioGroupItem value="card" id="card" />
+                        <Label htmlFor="card" className="flex-1 cursor-pointer">
+                          <div className="flex items-center justify-between">
+                            <span>Carte bancaire</span>
+                            <div className="text-sm text-gray-500">Visa, Mastercard, CB</div>
+                          </div>
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg">
+                        <RadioGroupItem value="paypal" id="paypal" />
+                        <Label htmlFor="paypal" className="flex-1 cursor-pointer">
+                          <div className="flex items-center justify-between">
+                            <span>PayPal</span>
+                            <div className="text-sm text-gray-500">Paiement sécurisé</div>
+                          </div>
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg">
+                        <RadioGroupItem value="bank" id="bank" />
+                        <Label htmlFor="bank" className="flex-1 cursor-pointer">
+                          <div className="flex items-center justify-between">
+                            <span>Virement bancaire</span>
+                            <div className="text-sm text-gray-500">Traitement sous 24h</div>
+                          </div>
+                        </Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
                   <Button
                     type="submit"
                     className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
@@ -226,7 +264,7 @@ const Checkout = () => {
                 <CardTitle>Récapitulatif de commande</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {cartItems.map((item) => (
+                {cartState.items.map((item) => (
                   <div key={item.id} className="flex items-center space-x-4">
                     <img 
                       src={item.image} 

@@ -1,56 +1,19 @@
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/useCart";
 
 const Cart = () => {
-  const { toast } = useToast();
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Gloss Mystique Rose",
-      price: 24.99,
-      quantity: 1,
-      image: "/placeholder.svg",
-      chakra: "Cœur"
-    },
-    {
-      id: 2,
-      name: "Rouge Chakra Bordeaux",
-      price: 28.99,
-      quantity: 2,
-      image: "/placeholder.svg",
-      chakra: "Racine"
-    }
-  ]);
+  const { state: cartState, updateQuantity, removeItem } = useCart();
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity === 0) {
-      removeItem(id);
-      return;
-    }
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-    toast({
-      title: "Produit retiré",
-      description: "L'article a été supprimé de votre panier.",
-    });
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cartState.total;
   const shipping = subtotal > 50 ? 0 : 4.99;
   const total = subtotal + shipping;
 
-  if (cartItems.length === 0) {
+  if (cartState.items.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
         <div className="max-w-4xl mx-auto px-4 py-16">
@@ -88,7 +51,7 @@ const Cart = () => {
           
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
-            {cartItems.map((item) => (
+            {cartState.items.map((item) => (
               <Card key={item.id} className="shadow-lg border-0">
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-4">
@@ -100,9 +63,11 @@ const Cart = () => {
                     
                     <div className="flex-1">
                       <h3 className="font-semibold text-gray-800">{item.name}</h3>
-                      <Badge variant="secondary" className="mt-1">
-                        Chakra {item.chakra}
-                      </Badge>
+                      {item.chakra && (
+                        <Badge variant="secondary" className="mt-1">
+                          Chakra {item.chakra}
+                        </Badge>
+                      )}
                     </div>
                     
                     <div className="flex items-center space-x-3">
