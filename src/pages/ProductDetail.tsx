@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ const ProductDetail = () => {
     rating: 5,
     reviewCount: 127,
     description: "Un éclat divin pour sublimer votre beauté intérieure. Ce gloss rose mystique capture l'essence de la féminité divine et révèle votre aura naturelle.",
+    chakra: "Cœur",
     ingredients: [
       "Huile de jojoba bio",
       "Beurre de karité équitable",
