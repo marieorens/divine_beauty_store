@@ -1,15 +1,19 @@
-
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, Heart, ArrowLeft } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
+import { useWishlist } from "@/hooks/useWishlist";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  
+  const { addItem: addToCart } = useCart();
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlist();
 
   // Mock product data - dans une vraie app, vous récupéreriez les données via l'ID
   const product = {
@@ -45,11 +49,32 @@ const ProductDetail = () => {
     inStock: true,
     stockCount: 15
   };
-
+  
   const handleAddToCart = () => {
-    // Logique d'ajout au panier
-    console.log(`Ajout au panier: ${quantity} x ${product.name}`);
+    addToCart({
+      id: product.id.toString(),
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+      chakra: product.chakra
+    });
   };
+
+  const handleWishlistToggle = () => {
+    if (isInWishlist(product.id.toString())) {
+      removeFromWishlist(product.id.toString());
+    } else {
+      addToWishlist({
+        id: product.id.toString(),
+        name: product.name,
+        price: product.price,
+        image: product.images[0],
+        chakra: product.chakra
+      });
+    }
+  };
+
+  const isInWishlistCheck = isInWishlist(product.id.toString());
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50">
@@ -75,10 +100,13 @@ const ProductDetail = () => {
               />
               <Button 
                 size="sm" 
-                variant="secondary" 
-                className="absolute top-4 right-4 rounded-full p-2"
+                variant={isInWishlistCheck ? "default" : "secondary"}
+                onClick={handleWishlistToggle}
+                className={`absolute top-4 right-4 rounded-full p-2 ${
+                  isInWishlistCheck ? 'bg-pink-500 hover:bg-pink-600' : ''
+                }`}
               >
-                <Heart className="w-4 h-4" />
+                <Heart className={`w-4 h-4 ${isInWishlistCheck ? 'fill-current text-white' : ''}`} />
               </Button>
             </div>
             <div className="flex space-x-2">

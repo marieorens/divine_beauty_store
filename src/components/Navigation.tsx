@@ -1,15 +1,17 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Heart, Search, Menu, ShoppingCart } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartCount] = useState(2); // Mock cart count
   const location = useLocation();
+  const { state: cartState } = useCart();
+  const { user, signOut } = useAuth();
 
   const navItems = [
     { name: "Accueil", path: "/" },
@@ -54,19 +56,34 @@ const Navigation = () => {
             <Button variant="ghost" size="sm">
               <Search className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="sm">
-              <Heart className="w-4 h-4" />
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/wishlist">
+                <Heart className="w-4 h-4" />
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" className="relative" asChild>
               <Link to="/cart">
                 <ShoppingCart className="w-4 h-4" />
-                {cartCount > 0 && (
+                {cartState.items.length > 0 && (
                   <Badge className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 bg-pink-500 text-xs">
-                    {cartCount}
+                    {cartState.items.length}
                   </Badge>
                 )}
               </Link>
             </Button>
+            
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600">Bonjour, {user.user_metadata?.first_name}</span>
+                <Button variant="outline" size="sm" onClick={signOut}>
+                  Déconnexion
+                </Button>
+              </div>
+            ) : (
+              <Button asChild size="sm" className="bg-gradient-to-r from-pink-500 to-purple-500">
+                <Link to="/auth">Connexion</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,21 +117,34 @@ const Navigation = () => {
                     <Search className="w-4 h-4 mr-2" />
                     Rechercher
                   </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Heart className="w-4 h-4 mr-2" />
-                    Favoris
+                  <Button variant="outline" className="w-full justify-start" asChild>
+                    <Link to="/wishlist" onClick={() => setIsOpen(false)}>
+                      <Heart className="w-4 h-4 mr-2" />
+                      Favoris
+                    </Link>
                   </Button>
                   <Button variant="outline" className="w-full justify-start relative" asChild>
                     <Link to="/cart" onClick={() => setIsOpen(false)}>
                       <ShoppingCart className="w-4 h-4 mr-2" />
                       Panier
-                      {cartCount > 0 && (
+                      {cartState.items.length > 0 && (
                         <Badge className="ml-auto bg-pink-500">
-                          {cartCount}
+                          {cartState.items.length}
                         </Badge>
                       )}
                     </Link>
                   </Button>
+                  {user ? (
+                    <Button variant="outline" className="w-full justify-start" onClick={signOut}>
+                      Déconnexion
+                    </Button>
+                  ) : (
+                    <Button variant="outline" className="w-full justify-start" asChild>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>
+                        Connexion
+                      </Link>
+                    </Button>
+                  )}
                 </div>
               </div>
             </SheetContent>
