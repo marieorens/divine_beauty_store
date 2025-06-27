@@ -1,58 +1,38 @@
-# Welcome to your Lovable project
+# Divine Beauty Store
 
-## Project info
+## Informations sur le projet
 
-**URL**: https://lovable.dev/projects/6e82d154-0538-4739-861b-5208f79a61c2
+Divine Beauty Store est un site site web e-commerce de la boutique Divine Beauty Store
 
-## How can I edit this code?
+**URL**: 
 
-There are several ways of editing your application.
+## Comment avoir ce code ?
 
-**Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6e82d154-0538-4739-861b-5208f79a61c2) and start prompting.
+**Utilisez votre IDE préféré (moi j'utilise Visual Studio Code :)**
 
-Changes made via Lovable will be committed automatically to this repo.
+Si vous voulez bosser en local avec votre propre éditeur (genre VS Code), clonez ce repo et poussez vos modifications.
 
-**Use your preferred IDE**
+La seule exigence, c’est d’avoir Node.js et npm installés. - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Follow these steps:
+# Étape 1 : Clonez le dépôt avec l’URL Git du projet.
+git clone <TON_URL_GIT>
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Étape 2 : Alllez dans le dossier du projet.
+cd <NOM_DU_PROJET>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+# Étape 3 : Installez les dépendances nécessaires.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Étape 4 : Lancez le serveur de développement avec rechargement automatique et aperçu instantané.
 npm run dev
-```
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
 
-**Use GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
+## Technologies utilisées:
 
 - Vite
 - TypeScript
@@ -60,9 +40,6 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/6e82d154-0538-4739-861b-5208f79a61c2) and click on Share -> Publish.
 
 ## Can I connect a custom domain to my Lovable project?
 
