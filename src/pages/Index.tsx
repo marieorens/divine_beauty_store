@@ -252,9 +252,9 @@ const Index = () => {
                 Commander Maintenant
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 border-white text-white hover:bg-black" asChild>
-              <Link to="/contact">
-                Nous Contacter
+            <Button size="lg" variant="secondary" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6" asChild>
+              <Link to="/products">
+                Nous contacter
               </Link>
             </Button>
           </div>
