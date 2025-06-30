@@ -1,0 +1,108 @@
+
+/* Classes d'animation et utilitaires */
+@layer utilities {
+  /* Classes d'animation de base */
+  .animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  /* Classe shimmer pour le texte */
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      #ec4899 0%,
+      #a855f7 25%,
+      #ffffff 50%,
+      #fbbf24 75%,
+      #ec4899 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Classes de transition de page */
+  .page-transition-enter {
+    animation: page-enter 0.6s ease-out forwards;
+  }
+
+  .page-transition-exit {
+    animation: page-exit 0.3s ease-in forwards;
+  }
+  
+  /* Classes d'animation pour les pétales */
+  .animate-petal-float-0 {
+    animation: petal-float-0 15s ease-in-out infinite;
+  }
+  
+  .animate-petal-float-1 {
+    animation: petal-float-1 18s ease-in-out infinite;
+  }
+  
+  .animate-petal-float-2 {
+    animation: petal-float-2 20s ease-in-out infinite;
+  }
+  
+  .animate-petal-float-3 {
+    animation: petal-float-3 12s ease-in-out infinite;
+  }
+  
+  .animate-petal-float-4 {
+    animation: petal-float-4 16s ease-in-out infinite;
+  }
+  
+  /* Classes d'animation pour les bulles */
+  .animate-bubble-float-0 {
+    animation: bubble-float-0 12s ease-in-out infinite;
+  }
+  
+  .animate-bubble-float-1 {
+    animation: bubble-float-1 14s ease-in-out infinite;
+  }
+  
+  .animate-bubble-float-2 {
+    animation: bubble-float-2 10s ease-in-out infinite;
+  }
+  
+  .animate-bubble-float-3 {
+    animation: bubble-float-3 16s ease-in-out infinite;
+  }
+  
+  /* Classes d'animation organiques */
+  .animate-organic-pulse {
+    animation: organic-pulse 8s ease-in-out infinite;
+  }
+  
+  .animate-organic-sway {
+    animation: organic-sway 6s ease-in-out infinite;
+  }
+  
+  .animate-organic-breathe {
+    animation: organic-breathe 10s ease-in-out infinite;
+  }
+  
+  .animate-organic-dance {
+    animation: organic-dance 7s ease-in-out infinite;
+  }
+  
+  /* Classes d'animation pour les particules */
+  .animate-sparkle-dance {
+    animation: sparkle-dance 4s ease-in-out infinite;
+  }
+  
+  .animate-sparkle-glow {
+    animation: sparkle-glow 2s ease-in-out infinite;
+  }
+  
+  .animate-sparkle-glow-delayed {
+    animation: sparkle-glow-delayed 2s ease-in-out infinite 0.5s;
+  }
+  
+  /* Animation de vagues */
+  .animate-wave-gentle {
+    animation: wave-gentle 8s ease-in-out infinite;
+  }
+}

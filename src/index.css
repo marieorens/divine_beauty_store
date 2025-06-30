@@ -1,0 +1,5 @@
+
+/* Fichier principal CSS - importe tous les styles */
+@import './styles/base.css';
+@import './styles/animations.css';
+@import './styles/utilities.css';
