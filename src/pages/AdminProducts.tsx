@@ -12,6 +12,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useToast } from "@/hooks/use-toast";
 import { useProducts, useCreateProduct, useUpdateProduct, useDeleteProduct, useUploadImage } from "@/hooks/useProducts";
 import { Plus, Edit, Eye, ArrowLeft, Trash2, Upload, X, Star } from "lucide-react";
+import AdminNavigation from "@/components/AdminNavigation";
 
 const AdminProducts = () => {
   const { toast } = useToast();
@@ -206,11 +207,12 @@ const AdminProducts = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+        <AdminNavigation />
         <div className="max-w-7xl mx-auto px-4 py-8 lg:py-16">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-pink-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Chargement des produits...</p>
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-500 mx-auto"></div>
+            <p className="mt-4 text-gray-300">Chargement des produits...</p>
           </div>
         </div>
       </div>
@@ -218,33 +220,35 @@ const AdminProducts = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+      <AdminNavigation />
+      
       <div className="max-w-7xl mx-auto px-4 py-8 lg:py-16">
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
           <div className="flex items-center">
-            <Button variant="ghost" asChild className="mr-4">
+            <Button variant="ghost" asChild className="mr-4 text-gray-300 hover:text-white">
               <Link to="/admin">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Retour au tableau de bord</span>
                 <span className="sm:hidden">Retour</span>
               </Link>
             </Button>
-            <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">Gestion des Produits</h1>
+            <h1 className="text-2xl lg:text-3xl font-bold text-white">Gestion des Produits</h1>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <Button
               onClick={handleAddNew}
-              className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
+              className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
             >
               <Plus className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Ajouter un produit</span>
               <span className="sm:hidden">Ajouter</span>
             </Button>
             
-            <Button variant="outline" asChild>
+            <Button variant="outline" asChild className="text-gray-300 border-gray-600 hover:bg-gray-800">
               <Link to="/" target="_blank">
                 <Eye className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Voir le site</span>
@@ -257,9 +261,9 @@ const AdminProducts = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
           {products?.map((product: any) => (
-            <Card key={product.id} className="shadow-lg border-0 hover:shadow-xl transition-shadow">
+            <Card key={product.id} className="bg-gray-800 border-gray-700 hover:bg-gray-750 transition-colors">
               <CardContent className="p-4 lg:p-6">
-                <div className="aspect-square mb-4 bg-gray-100 rounded-lg overflow-hidden relative">
+                <div className="aspect-square mb-4 bg-gray-700 rounded-lg overflow-hidden relative">
                   <img 
                     src={getPrimaryImage(product)} 
                     alt={product.name}
@@ -272,10 +276,10 @@ const AdminProducts = () => {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-gray-800 text-sm lg:text-base line-clamp-1">{product.name}</h3>
-                  <p className="text-xs lg:text-sm text-gray-600 line-clamp-2">{product.description}</p>
+                  <h3 className="font-semibold text-white text-sm lg:text-base line-clamp-1">{product.name}</h3>
+                  <p className="text-xs lg:text-sm text-gray-400 line-clamp-2">{product.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base lg:text-lg font-bold text-pink-600">{product.price}€</span>
+                    <span className="text-base lg:text-lg font-bold text-red-400">{product.price}€</span>
                     <div className="flex gap-1">
                       <Badge variant={product.active ? "default" : "secondary"} className="text-xs">
                         {product.active ? "Actif" : "Inactif"}
@@ -287,7 +291,7 @@ const AdminProducts = () => {
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-xs lg:text-sm text-gray-500">
+                  <div className="flex items-center justify-between text-xs lg:text-sm text-gray-400">
                     <span>Stock: {product.stock}</span>
                     {product.chakra && <span>Chakra: {product.chakra}</span>}
                   </div>
@@ -296,7 +300,7 @@ const AdminProducts = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEdit(product)}
-                      className="flex-1 text-xs lg:text-sm"
+                      className="flex-1 text-xs lg:text-sm text-gray-300 border-gray-600 hover:bg-gray-700"
                     >
                       <Edit className="w-3 h-3 lg:w-4 lg:h-4 mr-1 lg:mr-2" />
                       Modifier
@@ -318,7 +322,7 @@ const AdminProducts = () => {
 
         {/* Add/Edit Product Dialog */}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gray-800 border-gray-700 text-white">
             <DialogHeader>
               <DialogTitle>
                 {editingProduct ? "Modifier le produit" : "Ajouter un produit"}
@@ -362,7 +366,7 @@ const AdminProducts = () => {
                   variant="outline"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={imagePreviews.length >= 5}
-                  className="w-full"
+                  className="w-full text-gray-300 border-gray-600 hover:bg-gray-700"
                 >
                   <Upload className="w-4 h-4 mr-2" />
                   {imagePreviews.length === 0 ? "Choisir des images" : "Ajouter d'autres images"}
@@ -388,6 +392,7 @@ const AdminProducts = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                   />
                 </div>
                 <div>
@@ -400,6 +405,7 @@ const AdminProducts = () => {
                     value={formData.price}
                     onChange={handleInputChange}
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                   />
                 </div>
               </div>
@@ -412,6 +418,7 @@ const AdminProducts = () => {
                   value={formData.description}
                   onChange={handleInputChange}
                   rows={3}
+                  className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                 />
               </div>
 
@@ -423,6 +430,7 @@ const AdminProducts = () => {
                     name="category"
                     value={formData.category}
                     onChange={handleInputChange}
+                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                   />
                 </div>
                 <div>
@@ -432,6 +440,7 @@ const AdminProducts = () => {
                     name="chakra"
                     value={formData.chakra}
                     onChange={handleInputChange}
+                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                   />
                 </div>
               </div>
@@ -446,6 +455,7 @@ const AdminProducts = () => {
                     value={formData.stock}
                     onChange={handleInputChange}
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
                   />
                 </div>
                 <div className="flex items-center space-x-2 pt-6">
@@ -454,7 +464,7 @@ const AdminProducts = () => {
                     checked={formData.is_featured}
                     onCheckedChange={handleFeaturedChange}
                   />
-                  <Label htmlFor="is_featured" className="flex items-center">
+                  <Label htmlFor="is_featured" className="flex items-center text-gray-300">
                     <Star className="w-4 h-4 mr-1 text-yellow-500" />
                     Produit vedette
                   </Label>
@@ -462,12 +472,12 @@ const AdminProducts = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2 pt-4">
-                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="w-full sm:w-auto">
+                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="w-full sm:w-auto text-gray-300 border-gray-600 hover:bg-gray-700">
                   Annuler
                 </Button>
                 <Button 
                   type="submit"
-                  className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 w-full sm:w-auto"
+                  className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 w-full sm:w-auto"
                   disabled={createProductMutation.isPending || updateProductMutation.isPending || uploadImageMutation.isPending}
                 >
                   {createProductMutation.isPending || updateProductMutation.isPending || uploadImageMutation.isPending
@@ -482,7 +492,7 @@ const AdminProducts = () => {
 
         {/* Delete Confirmation Dialog */}
         <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-gray-800 border-gray-700 text-white">
             <AlertDialogHeader>
               <AlertDialogTitle>Confirmer la suppression</AlertDialogTitle>
               <AlertDialogDescription>
@@ -491,7 +501,7 @@ const AdminProducts = () => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Annuler</AlertDialogCancel>
+              <AlertDialogCancel className="text-gray-300 border-gray-600 hover:bg-gray-700">Annuler</AlertDialogCancel>
               <AlertDialogAction 
                 onClick={handleDelete}
                 className="bg-red-600 hover:bg-red-700"

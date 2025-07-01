@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('Auth state changed:', event, session);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session:', session);
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -40,6 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signUp = async (email: string, password: string, userData: any) => {
+    console.log('Attempting signup for:', email);
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -50,12 +53,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
     
     if (error) {
+      console.error('Signup error:', error);
       toast({
         title: "Erreur d'inscription",
         description: error.message,
         variant: "destructive",
       });
     } else {
+      console.log('Signup successful, check email');
       toast({
         title: "Inscription réussie",
         description: "Vérifiez votre email pour confirmer votre compte.",
@@ -66,18 +71,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signIn = async (email: string, password: string) => {
+    console.log('Attempting signin for:', email);
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     
     if (error) {
+      console.error('Signin error:', error);
       toast({
         title: "Erreur de connexion",
         description: error.message,
         variant: "destructive",
       });
     } else {
+      console.log('Signin successful');
       toast({
         title: "Connexion réussie",
         description: "Bienvenue !",
@@ -88,6 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signOut = async () => {
+    console.log('Attempting signout');
     await supabase.auth.signOut();
     toast({
       title: "Déconnexion",
