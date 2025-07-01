@@ -52,7 +52,7 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop Actions */}
+          {/* Desktop Actions - Always visible icons */}
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" size="sm">
               <Search className="w-4 h-4" />
