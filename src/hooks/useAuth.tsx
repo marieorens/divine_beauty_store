@@ -23,11 +23,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         console.log('Auth state changed:', event, session);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+
+        // Update profile email when user signs in
+        if (event === 'SIGNED_IN' && session?.user) {
+          setTimeout(async () => {
+            try {
+              await supabase
+                .from('profiles')
+                .update({ email: session.user.email })
+                .eq('id', session.user.id);
+            } catch (error) {
+              console.error('Error updating profile email:', error);
+            }
+          }, 0);
+        }
       }
     );
 
@@ -48,7 +62,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       password,
       options: {
         emailRedirectTo: `${window.location.origin}/`,
-        data: userData
+        data: {
+          ...userData,
+          email: email // Include email in metadata
+        }
       }
     });
     
