@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,8 +8,6 @@ import { useCart } from "@/hooks/useCart";
 import { useWishlist } from "@/hooks/useWishlist";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import AnimatedBackground from "@/components/AnimatedBackground";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 
 const Index = () => {
   const { data: featuredProducts, isLoading } = useFeaturedProducts();
@@ -73,9 +70,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-purple-50">
-      <Navigation />
-      
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-purple-50 page-transition-enter">
       {/* Hero Section avec fond animé */}
       <section className="relative overflow-hidden min-h-screen flex items-center">
         <AnimatedBackground />
@@ -169,7 +164,7 @@ const Index = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                       <Button className="flex-1 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-sm" asChild>
-                        <Link to={`/products/${product.id}`}>
+                        <Link to={`/product/${product.id}`}>
                           Voir Détails
                         </Link>
                       </Button>
@@ -258,15 +253,13 @@ const Index = () => {
               </Link>
             </Button>
             <Button size="lg" variant="secondary" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6" asChild>
-              <Link to="/contact">
+              <Link to="/products">
                 Nous contacter
               </Link>
             </Button>
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
