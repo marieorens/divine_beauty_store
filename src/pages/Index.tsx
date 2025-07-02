@@ -72,7 +72,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-purple-50 page-transition-enter">
-      {/* Conteneur avec fond animé étendu */}
+      {/* Conteneur avec fond animé étendu jusqu'aux témoignages */}
       <div className="relative">
         <AnimatedBackground />
         
@@ -219,7 +219,7 @@ const Index = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {benefits.map((benefit, index) => (
-                <Card key={index} className="text-center border-0 shadow-lg hover:shadow-xl transition-shadow bg-white/90 backdrop-blur-sm">
+                <Card key={index} className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 backdrop-blur-sm hover:scale-105 transform cursor-pointer">
                   <CardHeader className="p-4 sm:p-6">
                     <div className="mx-auto w-10 h-10 sm:w-12 sm:h-12 bg-pink-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
                       {benefit.icon}
@@ -237,13 +237,11 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Testimonials Carousel avec fond animé */}
-        <div className="relative">
-          <TestimonialsCarousel />
-        </div>
+        {/* Testimonials Carousel - toujours dans le conteneur avec fond animé */}
+        <TestimonialsCarousel />
       </div>
 
-      {/* CTA Section - après le fond animé */}
+      {/* CTA Section - en dehors du fond animé */}
       <section className="py-12 sm:py-16 bg-gradient-to-r from-pink-500 to-purple-500">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">
