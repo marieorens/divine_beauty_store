@@ -83,7 +83,7 @@ const Checkout = () => {
       console.error("Order creation failed:", error);
       toast({
         title: "Erreur de commande",
-        description: "Une erreur est survenue lors de la création de votre commande.",
+        description: "Une erreur est survenue lors de la création de votre commande. Veuillez réessayer.",
         variant: "destructive",
       });
     } finally {

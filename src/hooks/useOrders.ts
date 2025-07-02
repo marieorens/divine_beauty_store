@@ -41,6 +41,7 @@ export const useCreateOrder = () => {
           email: orderData.customer.email,
           first_name: orderData.customer.first_name,
           last_name: orderData.customer.last_name,
+          phone: orderData.customer.phone || null,
           user_id: user?.id || null,
         };
 
@@ -69,7 +70,8 @@ export const useCreateOrder = () => {
           shipping_address: orderData.shipping_address,
           billing_address: orderData.billing_address,
           order_number: `CMD-${Date.now()}`, // Temporary, will be overwritten by trigger
-          status: 'pending'
+          status: 'pending',
+          payment_status: 'pending'
         };
 
         console.log("Creating order:", orderToCreate);
@@ -119,6 +121,7 @@ export const useCreateOrder = () => {
       queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
       queryClient.invalidateQueries({ queryKey: ["admin-customers"] });
       queryClient.invalidateQueries({ queryKey: ["user-orders"] });
+      console.log("Order created successfully - all queries invalidated");
       toast({
         title: "Commande créée",
         description: "La commande a été enregistrée avec succès.",
