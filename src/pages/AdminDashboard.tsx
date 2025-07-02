@@ -121,7 +121,7 @@ const AdminDashboard = () => {
             </CardHeader>
             <CardContent>
               <Button asChild className="w-full" variant="outline">
-                <Link to="/admin/orders" className="text-gray-300 border-gray-600 hover:bg-gray-700">
+                <Link to="/admin/orders" className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600">
                   Voir les commandes
                 </Link>
               </Button>
@@ -140,7 +140,7 @@ const AdminDashboard = () => {
             </CardHeader>
             <CardContent>
               <Button asChild className="w-full" variant="outline">
-                <Link to="/admin/customers" className="text-gray-300 border-gray-600 hover:bg-gray-700">
+                <Link to="/admin/customers" className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600">
                   Gérer les clients
                 </Link>
               </Button>

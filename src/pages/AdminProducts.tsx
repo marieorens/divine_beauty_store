@@ -248,7 +248,7 @@ const AdminProducts = () => {
               <span className="sm:hidden">Ajouter</span>
             </Button>
             
-            <Button variant="outline" asChild className="text-gray-300 border-gray-600 hover:bg-gray-800">
+            <Button variant="outline" asChild className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600">
               <Link to="/" target="_blank">
                 <Eye className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Voir le site</span>

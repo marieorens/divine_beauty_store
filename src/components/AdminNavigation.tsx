@@ -66,7 +66,7 @@ const AdminNavigation = () => {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="outline" size="sm" asChild>
-              <Link to="/" target="_blank" className="text-gray-300 border-gray-600 hover:bg-gray-800">
+              <Link to="/" target="_blank" className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600">
                 Voir le site
               </Link>
             </Button>
@@ -114,7 +114,7 @@ const AdminNavigation = () => {
                 <div className="space-y-4 pt-6 border-t border-gray-800">
                   <Button variant="outline" className="w-full justify-start text-gray-300 border-gray-600" asChild>
                     <Link to="/" target="_blank" onClick={() => setIsOpen(false)}>
-                      <Home className="w-4 h-4 mr-2" />
+                      <Home className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600" />
                       Voir le site
                     </Link>
                   </Button>
