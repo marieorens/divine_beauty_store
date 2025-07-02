@@ -89,12 +89,12 @@ const Index = () => {
                 Découvrez notre collection exclusive de produits de beauté naturels et luxueux
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-                <Button asChild size="lg" className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6">
+                <Button asChild size="lg" className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-full hover:scale-105 transition-all duration-300">
                   <Link to="/products">
                     Découvrir la Collection
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6" asChild>
+                <Button variant="outline" size="lg" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-full hover:scale-105 transition-all duration-300" asChild>
                   <Link to="/about">
                     En Savoir Plus
                   </Link>
@@ -251,12 +251,12 @@ const Index = () => {
             Rejoignez des milliers de femmes qui ont déjà transformé leur routine beauté avec nos produits premium
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6" asChild>
+            <Button size="lg" variant="secondary" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-full hover:scale-105 transition-all duration-300" asChild>
               <Link to="/products">
                 Commander Maintenant
               </Link>
             </Button>
-            <Button size="lg" variant="secondary" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6" asChild>
+            <Button size="lg" variant="secondary" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-full hover:scale-105 transition-all duration-300" asChild>
               <Link to="/products">
                 Nous contacter
               </Link>
