@@ -6,7 +6,6 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import AnimatedBackground from "@/components/AnimatedBackground";
-import TestOrderButton from "@/components/TestOrderButton";
 
 const Index = () => {
   return (
@@ -17,11 +16,6 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          {/* Test button - to be removed later */}
-          <div className="mb-8">
-            <TestOrderButton />
-          </div>
-          
           <div className="mb-8">
             <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-pink-100 to-purple-100 text-pink-800 mb-6">
               <Sparkles className="w-4 h-4 mr-2" />
