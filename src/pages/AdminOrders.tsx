@@ -88,6 +88,57 @@ const AdminOrders = () => {
           </div>
         </div>
 
+        {/* Stats Summary */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 sm:mb-8">
+          <Card className="bg-gray-800 border-gray-700">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-400">Total Commandes</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">{orders.length}</p>
+                </div>
+                <Package className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gray-800 border-gray-700">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-400">En Attente</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">{orders.filter(o => o.status === 'pending').length}</p>
+                </div>
+                <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-400" />
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gray-800 border-gray-700">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-400">Livrées</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">{orders.filter(o => o.status === 'delivered').length}</p>
+                </div>
+                <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-green-400" />
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gray-800 border-gray-700">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-400">CA Total</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">{orders.reduce((sum, o) => sum + o.total, 0).toFixed(2)}€</p>
+                </div>
+                <div className="text-xl sm:text-2xl">💰</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Orders List */}
         <div className="space-y-4">
           {orders.map((order) => (

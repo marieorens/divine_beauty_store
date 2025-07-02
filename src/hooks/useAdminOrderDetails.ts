@@ -60,9 +60,9 @@ export const useAdminOrderDetails = (orderId: string) => {
         order,
         customer: {
           ...customer,
-          first_name: customer.first_name,
-          last_name: customer.last_name,
-          phone: customer.phone
+          first_name: customer.first_name || 'Non renseigné',
+          last_name: customer.last_name || 'Non renseigné',
+          phone: customer.phone || 'Non renseigné'
         },
         items: orderItems
       };

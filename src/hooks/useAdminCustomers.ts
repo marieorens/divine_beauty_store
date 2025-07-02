@@ -20,7 +20,8 @@ export const useAdminCustomers = () => {
           created_at,
           updated_at,
           user_id
-        `);
+        `)
+        .order('created_at', { ascending: false });
 
       if (customersError) {
         console.error("Error fetching customers:", customersError);
@@ -56,10 +57,10 @@ export const useAdminCustomers = () => {
 
         return {
           id: customer.id,
-          first_name: customer.first_name || 'N/A',
-          last_name: customer.last_name || 'N/A',
+          first_name: customer.first_name || 'Non renseigné',
+          last_name: customer.last_name || 'Non renseigné',
           email: customer.email || 'N/A',
-          phone: customer.phone,
+          phone: customer.phone || 'Non renseigné',
           created_at: customer.created_at,
           updated_at: customer.updated_at,
           orders_count: ordersCount,
