@@ -6,6 +6,8 @@ export const useAdminOrders = () => {
   return useQuery({
     queryKey: ["admin-orders"],
     queryFn: async () => {
+      console.log("Fetching admin orders...");
+      
       const { data: orders, error: ordersError } = await supabase
         .from("orders")
         .select(`
@@ -22,45 +24,53 @@ export const useAdminOrders = () => {
         `)
         .order('created_at', { ascending: false });
 
-      if (ordersError) throw ordersError;
+      if (ordersError) {
+        console.error("Error fetching orders:", ordersError);
+        throw ordersError;
+      }
 
-      // Get customers data for customer names and emails
+      console.log("Orders found:", orders);
+
+      // Get customers data
       const { data: customers, error: customersError } = await supabase
         .from("customers")
-        .select("id, email, first_name, last_name, user_id");
+        .select("id, email, first_name, last_name");
 
-      if (customersError) throw customersError;
+      if (customersError) {
+        console.error("Error fetching customers:", customersError);
+        throw customersError;
+      }
 
-      // Get profiles data for additional customer info
-      const { data: profiles, error: profilesError } = await supabase
-        .from("profiles")
-        .select("id, first_name, last_name");
-
-      if (profilesError) throw profilesError;
+      console.log("Customers found:", customers);
 
       // Get order items count for each order
       const { data: orderItems, error: itemsError } = await supabase
         .from("order_items")
         .select("order_id, quantity");
 
-      if (itemsError) throw itemsError;
+      if (itemsError) {
+        console.error("Error fetching order items:", itemsError);
+        throw itemsError;
+      }
+
+      console.log("Order items found:", orderItems);
 
       // Combine the data
       const ordersWithDetails = orders.map(order => {
         const customer = customers.find(c => c.id === order.customer_id);
-        const profile = profiles.find(p => p.id === customer?.user_id);
         const items = orderItems.filter(item => item.order_id === order.id);
         const itemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
         return {
           ...order,
-          customer_name: profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'N/A' : 'N/A',
+          customer_name: customer ? `${customer.first_name || ''} ${customer.last_name || ''}`.trim() || 'N/A' : 'N/A',
           customer_email: customer?.email || 'N/A',
           items_count: itemsCount,
           total: Number(order.total_amount)
         };
       });
 
+      console.log("Final orders with details:", ordersWithDetails);
       return ordersWithDetails;
     },
   });
