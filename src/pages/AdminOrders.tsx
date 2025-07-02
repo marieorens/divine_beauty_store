@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Eye, Package, Clock, CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { ArrowLeft, Eye, Package, Clock, CheckCircle, XCircle, Loader2, TrendingUp } from "lucide-react";
 import AdminNavigation from "@/components/AdminNavigation";
 import AdminOrderDetailsModal from "@/components/AdminOrderDetailsModal";
 import { useAdminOrders } from "@/hooks/useAdminOrders";
@@ -130,10 +130,10 @@ const AdminOrders = () => {
             <CardContent className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-400">CA Total</p>
+                  <p className="text-sm text-gray-400">Revenus</p>
                   <p className="text-xl sm:text-2xl font-bold text-white">{orders.reduce((sum, o) => sum + o.total, 0).toFixed(2)}€</p>
                 </div>
-                <div className="text-xl sm:text-2xl">💰</div>
+                <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-400" />
               </div>
             </CardContent>
           </Card>
