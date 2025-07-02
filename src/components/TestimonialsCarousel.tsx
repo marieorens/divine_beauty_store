@@ -49,7 +49,7 @@ const TestimonialsCarousel = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white/80 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -69,7 +69,7 @@ const TestimonialsCarousel = () => {
           <CarouselContent>
             {testimonials.map((testimonial) => (
               <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3">
-                <Card className="h-full shadow-lg border-0 hover:shadow-xl transition-shadow">
+                <Card className="h-full shadow-lg border-0 hover:shadow-xl transition-shadow bg-white/90 backdrop-blur-sm">
                   <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center mb-4">
                       <img 
