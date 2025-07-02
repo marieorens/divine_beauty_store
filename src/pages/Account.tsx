@@ -184,7 +184,7 @@ const Account = () => {
                           <p className="text-sm text-gray-600">
                             {order.order_items?.length} article(s)
                           </p>
-                          <Button variant="outline" size="sm" asChild className="w-full bg-gradient-to-r from-white-500 to-orange-500">
+                          <Button variant="outline" size="sm" asChild className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600">
                             <Link to={`/order/${order.id}`}>
                               <Eye className="w-4 h-4 mr-2" />
                               Voir détails
