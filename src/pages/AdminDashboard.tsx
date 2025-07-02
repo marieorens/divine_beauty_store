@@ -32,13 +32,6 @@ const AdminDashboard = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
           <h1 className="text-2xl lg:text-3xl font-bold text-white">Tableau de Bord Administrateur</h1>
-          <Button variant="outline" asChild className="text-gray-300 border-gray-600 hover:bg-gray-800">
-            <Link to="/" target="_blank">
-              <Eye className="w-4 h-4 mr-2" />
-              <span className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600">Voir le site</span>
-              <span className="sm:hidden">Site</span>
-            </Link>
-          </Button>
         </div>
 
         {/* Stats Cards */}
