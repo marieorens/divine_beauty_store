@@ -9,13 +9,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/useCart";
+import { useCreateOrder } from "@/hooks/useOrders";
 import { ArrowLeft, CreditCard, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const { toast } = useToast();
-  const { state: cartState } = useCart();
+  const { state: cartState, clearCart } = useCart();
+  const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("card");
+  const createOrderMutation = useCreateOrder();
 
   const subtotal = cartState.total;
   const shipping = subtotal > 50 ? 0 : 4.99;
@@ -45,20 +49,41 @@ const Checkout = () => {
     setIsProcessing(true);
 
     try {
-      // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Préparer les données de la commande
+      const orderData = {
+        customer: {
+          email: formData.email,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          phone: formData.phone
+        },
+        total_amount: total,
+        shipping_address: `${formData.address}\n${formData.city} ${formData.postalCode}\n${formData.country}`,
+        billing_address: `${formData.address}\n${formData.city} ${formData.postalCode}\n${formData.country}`,
+        items: cartState.items.map(item => ({
+          product_id: item.id,
+          quantity: item.quantity,
+          unit_price: item.price,
+          total_price: item.price * item.quantity
+        }))
+      };
+
+      console.log("Submitting order:", orderData);
+
+      // Créer la commande via l'API
+      await createOrderMutation.mutateAsync(orderData);
       
-      toast({
-        title: "Commande confirmée !",
-        description: `Votre paiement par ${paymentMethod === 'card' ? 'carte bancaire' : paymentMethod === 'paypal' ? 'PayPal' : 'virement bancaire'} a été traité avec succès.`,
-      });
+      // Vider le panier après succès
+      clearCart();
       
-      // Redirect to success page
-      window.location.href = "/order-success";
+      // Rediriger vers la page de succès
+      navigate("/order-success");
+      
     } catch (error) {
+      console.error("Order creation failed:", error);
       toast({
-        title: "Erreur de paiement",
-        description: "Une erreur est survenue lors du traitement de votre commande.",
+        title: "Erreur de commande",
+        description: "Une erreur est survenue lors de la création de votre commande.",
         variant: "destructive",
       });
     } finally {
