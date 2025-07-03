@@ -13,7 +13,7 @@ const AdminAuth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Mot de passe temporaire pour l'admin (à changer en production)
+  
   const ADMIN_PASSWORD = "admin123";
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,7 +24,7 @@ const AdminAuth = () => {
       localStorage.setItem("adminAuth", "true");
       toast({
         title: "Connexion admin réussie",
-        description: "Bienvenue dans le back-office.",
+        description: "Bienvenue dans l'interface de gestion de votre boutique.",
       });
       navigate("/admin");
     } else {
@@ -78,7 +78,7 @@ const AdminAuth = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-400">
-              Accès réservé aux administrateurs autorisés
+              Accès réservé aux administrateurs autorisés.
             </p>
           </div>
         </CardContent>
